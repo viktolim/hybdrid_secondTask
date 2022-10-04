@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import MealScreen from "./src/sreens/MealScreen";
+import FoodScreen from "./src/sreens/FoodScreen";
+import { MealProvider } from "./src/context/MealContext";
+import AboutFoodScreen from "./src/sreens/AboutFoodScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const navigator = createStackNavigator(
+  {
+    Search: MealScreen,
+    Recipe: FoodScreen,
+    Comments: AboutFoodScreen
   },
-});
+  {
+    initialRouteName: "Search",
+    defaultNavigationOptions: {
+      title: "MealSearch",
+    },
+  }
+);
+const App = createAppContainer(navigator);
+export default () => {
+  return (
+    <MealProvider >
+      <App />
+    </MealProvider>
+  );
+};
